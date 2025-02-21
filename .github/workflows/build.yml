@@ -1,11 +1,10 @@
 # From https://github.com/gudzpoz/luajava/blob/main/.github/workflows/build-natives.yml
 # Modified from https://github.com/libgdx/libgdx/blob/master/.github/workflows/build-publish.yml
+# LastModify: chenchao 
 
 name: Build binaries
 
 on:
-  schedule:
-    - cron: '0 0 1 * *'
   workflow_dispatch:
 
 jobs:
