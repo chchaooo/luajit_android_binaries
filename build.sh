@@ -41,23 +41,6 @@ make HOST_CC="gcc -m32 -I/usr/i686-linux-gnu/include" CROSS=$NDKP \
 mkdir -p $OPT_DIR/armeabi-v7a
 mv $LUAJIT_SRC/libluajit.a $OPT_DIR/armeabi-v7a/libluajit.a
 
-echo "########## Building i686 ##########"
-TARGET=i686-linux-android
-NDKP=$NDKB/${TARGET}-
-NDKCC=$NDKB/${TARGET}${NDKAPI}-clang
-NDKARCH="-DNO_RTLD_DEFAULT=1"
-make HOST_CC="gcc -m32 -I/usr/i686-linux-gnu/include" CROSS=$NDKP \
-     STATIC_CC=$NDKCC DYNAMIC_CC="$NDKCC -fPIC" \
-     TARGET_LD=$NDKCC TARGET_AR="$NDKB/llvm-ar rcus" TARGET_STRIP=$NDKB/llvm-strip \
-     CFLAGS=-fPIC TARGET_FLAGS="$NDKARCH" \
-     clean
-make HOST_CC="gcc -m32 -I/usr/i686-linux-gnu/include" CROSS=$NDKP \
-     STATIC_CC=$NDKCC DYNAMIC_CC="$NDKCC -fPIC" \
-     TARGET_LD=$NDKCC TARGET_AR="$NDKB/llvm-ar rcus" TARGET_STRIP=$NDKB/llvm-strip \
-     CFLAGS=-fPIC TARGET_FLAGS="$NDKARCH" \
-     amalg
-mkdir $OPT_DIR/x86
-mv $LUAJIT_SRC/libluajit.a $OPT_DIR/x86/libluajit.a
 
 NDKAPI=21
 
@@ -79,20 +62,3 @@ make HOST_CC="gcc -m64" CROSS=$NDKP \
 mkdir -p $OPT_DIR/arm64-v8a
 mv $LUAJIT_SRC/libluajit.a $OPT_DIR/arm64-v8a/libluajit.a
 
-echo "########## Building x86_64 ##########"
-TARGET=x86_64-linux-android
-NDKP=$NDKB/${TARGET}-
-NDKCC=$NDKB/${TARGET}${NDKAPI}-clang
-NDKARCH="-DLUAJIT_ENABLE_GC64=1 -DNO_RTLD_DEFAULT=1"
-make HOST_CC="gcc -m64" CROSS=$NDKP \
-     STATIC_CC=$NDKCC DYNAMIC_CC="$NDKCC -fPIC" \
-     TARGET_LD=$NDKCC TARGET_AR="$NDKB/llvm-ar rcus" TARGET_STRIP=$NDKB/llvm-strip \
-     CFLAGS=-fPIC TARGET_FLAGS="$NDKARCH" \
-     clean
-make HOST_CC="gcc -m64" CROSS=$NDKP \
-     STATIC_CC=$NDKCC DYNAMIC_CC="$NDKCC -fPIC" \
-     TARGET_LD=$NDKCC TARGET_AR="$NDKB/llvm-ar rcus" TARGET_STRIP=$NDKB/llvm-strip \
-     CFLAGS=-fPIC TARGET_FLAGS="$NDKARCH" \
-     amalg
-mkdir -p $OPT_DIR/x86_64
-mv $LUAJIT_SRC/libluajit.a $OPT_DIR/x86_64/libluajit.a
