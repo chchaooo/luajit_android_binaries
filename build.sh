@@ -2,6 +2,7 @@
 # From https://github.com/gudzpoz/luajava/blob/main/luajit/jni/scripts/build-android.sh
 # From https://github.com/mjansson/lua_lib/blob/master/lua/luajit/build-android.sh
 # Fixed https://github.com/LuaJIT/LuaJIT/issues/440#issuecomment-438809840
+# modify by chenchao 20250221
 
 LUAJIT=luajit
 
