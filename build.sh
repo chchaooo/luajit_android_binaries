@@ -28,11 +28,13 @@ TARGET=armv7a-linux-androideabi
 NDKP=$NDKB/${TARGET}-
 NDKCC=$NDKB/${TARGET}${NDKAPI}-clang
 NDKARCH="-march=armv7-a -mhard-float -mfpu=vfpv3-d16 -mfloat-abi=softfp -D_NDK_MATH_NO_SOFTFP=1 -marm -DNO_RTLD_DEFAULT=1"
+# 清理之前的构建
 make HOST_CC="gcc -m32 -I/usr/i686-linux-gnu/include" CROSS=$NDKP \
      STATIC_CC=$NDKCC DYNAMIC_CC="$NDKCC -fPIC" \
      TARGET_LD=$NDKCC TARGET_AR="$NDKB/llvm-ar rcus" TARGET_STRIP=$NDKB/llvm-strip \
      CFLAGS=-fPIC TARGET_FLAGS="$NDKARCH" \
      clean
+# 编译生成静态库 (.a)
 make HOST_CC="gcc -m32 -I/usr/i686-linux-gnu/include" CROSS=$NDKP \
      STATIC_CC=$NDKCC DYNAMIC_CC="$NDKCC -fPIC" \
      TARGET_LD=$NDKCC TARGET_AR="$NDKB/llvm-ar rcus" TARGET_STRIP=$NDKB/llvm-strip \
@@ -40,6 +42,14 @@ make HOST_CC="gcc -m32 -I/usr/i686-linux-gnu/include" CROSS=$NDKP \
      amalg
 mkdir -p $OPT_DIR/armeabi-v7a
 mv $LUAJIT_SRC/libluajit.a $OPT_DIR/armeabi-v7a/libluajit.a
+# 编译生成共享库 (.so)
+make HOST_CC="gcc -m32 -I/usr/i686-linux-gnu/include" CROSS=$NDKP \
+     STATIC_CC=$NDKCC DYNAMIC_CC="$NDKCC -fPIC" \
+     TARGET_LD=$NDKCC TARGET_AR="$NDKB/llvm-ar rcus" TARGET_STRIP=$NDKB/llvm-strip \
+     CFLAGS=-fPIC TARGET_FLAGS="$NDKARCH" \
+     TARGET_SHLDFLAGS="-shared" \
+     libluajit.so
+mv $LUAJIT_SRC/libluajit.so $OPT_DIR/armeabi-v7a/libluajit.so
 
 
 echo "########## Building arm64-v8a ##########"
