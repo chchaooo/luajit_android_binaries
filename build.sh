@@ -42,8 +42,6 @@ mkdir -p $OPT_DIR/armeabi-v7a
 mv $LUAJIT_SRC/libluajit.a $OPT_DIR/armeabi-v7a/libluajit.a
 
 
-NDKAPI=21
-
 echo "########## Building arm64-v8a ##########"
 TARGET=aarch64-linux-android
 NDKP=$NDKB/${TARGET}-
