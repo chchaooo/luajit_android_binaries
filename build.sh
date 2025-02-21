@@ -47,11 +47,13 @@ TARGET=aarch64-linux-android
 NDKP=$NDKB/${TARGET}-
 NDKCC=$NDKB/${TARGET}${NDKAPI}-clang
 NDKARCH="-DLJ_ABI_SOFTFP=0 -DLJ_ARCH_HASFPU=1 -DLUAJIT_ENABLE_GC64=1 -DNO_RTLD_DEFAULT=1"
+# 清理之前的构建
 make HOST_CC="gcc -m64" CROSS=$NDKP \
      STATIC_CC=$NDKCC DYNAMIC_CC="$NDKCC -fPIC" \
      TARGET_LD=$NDKCC TARGET_AR="$NDKB/llvm-ar rcus" TARGET_STRIP=$NDKB/llvm-strip \
      CFLAGS=-fPIC TARGET_FLAGS="$NDKARCH" \
      clean
+# 编译生成静态库 (.a)
 make HOST_CC="gcc -m64" CROSS=$NDKP \
      STATIC_CC=$NDKCC DYNAMIC_CC="$NDKCC -fPIC" \
      TARGET_LD=$NDKCC TARGET_AR="$NDKB/llvm-ar rcus" TARGET_STRIP=$NDKB/llvm-strip \
@@ -59,4 +61,11 @@ make HOST_CC="gcc -m64" CROSS=$NDKP \
      amalg
 mkdir -p $OPT_DIR/arm64-v8a
 mv $LUAJIT_SRC/libluajit.a $OPT_DIR/arm64-v8a/libluajit.a
-
+# 编译生成共享库 (.so)
+make HOST_CC="gcc -m64" CROSS=$NDKP \
+     STATIC_CC=$NDKCC DYNAMIC_CC="$NDKCC -fPIC" \
+     TARGET_LD=$NDKCC TARGET_AR="$NDKB/llvm-ar rcus" TARGET_STRIP=$NDKB/llvm-strip \
+     CFLAGS=-fPIC TARGET_FLAGS="$NDKARCH" \
+     TARGET_SHLDFLAGS="-shared" \
+     libluajit.so
+mv $LUAJIT_SRC/libluajit.so $OPT_DIR/arm64-v8a/libluajit.so
