@@ -37,6 +37,7 @@ jobs:
            cd LuaJIT                   # 进入克隆的仓库目录
            git checkout v2.1.0-beta3   # 切换到指定 Tag
            cd ..
+           ls
 
       - name: Install cross-compilation toolchains
         run: |
