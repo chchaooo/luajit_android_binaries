@@ -30,10 +30,7 @@ jobs:
       - run: echo "JAVA_11=$JAVA_HOME" >> $GITHUB_ENV
 
       - name: Clone LuaJIT repository
-        run: git clone https://github.com/LuaJIT/LuaJIT.git luajit
-
-      - name: Checkout release version
-        run: git checkout v2.1.0-beta3
+        run: git clone --branch v2.1.0-beta3 https://github.com/LuaJIT/LuaJIT.git
 
       - name: Install cross-compilation toolchains
         run: |
