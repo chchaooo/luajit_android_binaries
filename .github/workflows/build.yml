@@ -32,6 +32,9 @@ jobs:
       - name: Clone LuaJIT repository
         run: git clone https://github.com/LuaJIT/LuaJIT.git luajit
 
+      - name: Checkout release version
+        run: git checkout v2.1.0-beta3
+
       - name: Install cross-compilation toolchains
         run: |
           sudo apt update
