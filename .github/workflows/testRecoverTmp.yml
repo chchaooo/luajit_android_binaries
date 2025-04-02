@@ -54,7 +54,7 @@ jobs:
         run: |
           mkdir -p opt/includes
           cp -f luajit/src/*.h opt/includes
-          cp -f luajit/src/jit opt/jit
+          cp -f luajit/src/jit/*.lua opt/jit
 
       - run: echo "DATA=$( date +"%Y-%m-%d-%H-%M" )" >> $GITHUB_ENV
 
