@@ -53,6 +53,7 @@ jobs:
       - name: Copy header files
         run: |
           mkdir -p opt/includes
+          mkdir -p opt/jit
           cp -f luajit/src/*.h opt/includes
           cp -f luajit/src/jit/*.lua opt/jit
 
